@@ -80,16 +80,16 @@ async function waitForElement(selector, options = {}) {
 ;(async function () {
     'use strict'
 
-    console.log('WhatsApp Web Tag Everyone loaded')
+    console.log('WhatsApp Web Tag Everyone loaded.')
 
     async function tagEveryone() {
-        const chatSubtitle = document.querySelector("[data-testid='chat-subtitle'] > span")
+        const groupSubtitle = document.querySelector("[data-testid='chat-subtitle'] > span")
 
-        if (!chatSubtitle) {
+        if (!groupSubtitle) {
             throw new Error('No chat subtitle found, please open a group chat.')
         }
 
-        let groupUsers = chatSubtitle.innerText.split(', ')
+        let groupUsers = groupSubtitle.innerText.split(', ')
 
         // Remove unnecessary text
         groupUsers = groupUsers.filter(user => user !== 'You')
@@ -103,11 +103,7 @@ async function waitForElement(selector, options = {}) {
             throw new Error('No chat input found. Please type a letter in the chat input.')
         }
 
-        console.debug('Chat input:', chatInput)
-
         for (const user of groupUsers) {
-            chatInput.focus()
-
             document.execCommand('insertText', false, `@${user}`)
 
             // await waitForElement("[data-testid='contact-mention-list-item']")
