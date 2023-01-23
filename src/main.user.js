@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name            WhatsApp Web Mention Everyone
 // @namespace       AlejandroAkbal
-// @version         0.1.1
+// @version         0.1.2
 // @description     Automatically tag everyone in a group chat on WhatsApp Web
 // @author          Alejandro Akbal
 // @license         AGPL-3.0
@@ -98,10 +98,14 @@ async function waitForElement(selector, options = {}) {
     const groupSubtitle = document.querySelector("[data-testid='chat-subtitle'] > span")
 
     if (!groupSubtitle) {
-      throw new Error('No chat subtitle found, please open a group chat.')
+      throw new Error('No chat subtitle found. Please open a group chat.')
     }
 
     let groupUsers = groupSubtitle.innerText.split(', ')
+
+    if (groupUsers.length === 1) {
+      throw new Error('No users found in the group chat. Please wait a second and try again.')
+    }
 
     // Remove unnecessary text
     groupUsers = groupUsers.filter((user) => user !== 'You')
