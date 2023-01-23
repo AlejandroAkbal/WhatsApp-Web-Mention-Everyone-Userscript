@@ -80,7 +80,26 @@ async function waitForElement(selector, options = {}) {
 ;(async function () {
     'use strict'
 
-    console.log('WhatsApp Web Tag Everyone loaded.')
+    console.info('WhatsApp Web Tag Everyone loaded.')
+
+    let buffer = "";
+
+    document.addEventListener("keyup", event => {
+        buffer += event.key;
+
+        // Keep the last 2 characters
+        buffer = buffer.slice(-2)
+
+        console.log(buffer)
+
+        if (buffer === "@@") {
+            buffer = "";
+
+            // TODO: Delete the last 2 written characters (the "@@")
+
+            tagEveryone();
+        }
+    });
 
     async function tagEveryone() {
         const groupSubtitle = document.querySelector("[data-testid='chat-subtitle'] > span")
@@ -126,5 +145,4 @@ async function waitForElement(selector, options = {}) {
         }
     }
 
-    await tagEveryone()
 })()
