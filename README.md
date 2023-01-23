@@ -4,7 +4,7 @@ This userscript automates the process of mentioning everyone in a group chat.
 
 <!--  Image -->
 
-![WhatsApp Web Mention Everyone](misc/logo.jpg)
+![WhatsApp Web Mention Everyone](misc/example.jpg)
 
 ## Usage
 
