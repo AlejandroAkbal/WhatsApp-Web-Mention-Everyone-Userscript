@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name            WhatsApp Web Mention Everyone
 // @namespace       AlejandroAkbal
-// @version         0.1.2
+// @version         0.1.3
 // @description     Automatically tag everyone in a group chat on WhatsApp Web
 // @author          Alejandro Akbal
 // @license         AGPL-3.0
@@ -48,17 +48,25 @@ function sleep(ms) {
     }
   })
 
-  async function tagEveryone() {
-    const groupSubtitle = document.querySelector("[data-testid='chat-subtitle'] > span")
+  function extractGroupUsers() {
+    const groupSubtitle = document.querySelector("[data-testid='chat-subtitle']")
 
     if (!groupSubtitle) {
       throw new Error('No chat subtitle found. Please open a group chat.')
     }
 
-    let groupUsers = groupSubtitle.innerText.split(', ')
+    // Check if users are separated with '，' (Chinese) or ',' (English)
+    const separator = groupSubtitle.textContent.includes('，') ? '，' : ','
+
+    let groupUsers = groupSubtitle.textContent.split(separator)
+
+    groupUsers = groupUsers.map((user) => user.trim())
 
     if (groupUsers.length === 1) {
-      throw new Error('No users found in the group chat. Please wait a second and try again.')
+      throw new Error(
+        'No users found in the group chat. Please wait a second and try again.' +
+          'If the error persists, it might be that your Locale is not supported. Please open an issue on GitHub.'
+      )
     }
 
     // Remove unnecessary text
@@ -79,7 +87,11 @@ function sleep(ms) {
     )
 
     // Normalize user's names without accents or special characters
-    groupUsers = groupUsers.map((user) => user.normalize('NFD').replace(/[\u0300-\u036f]/g, ''))
+    return groupUsers.map((user) => user.normalize('NFD').replace(/[\u0300-\u036f]/g, ''))
+  }
+
+  async function tagEveryone() {
+    const groupUsers = extractGroupUsers()
 
     const chatInput = document.querySelector("[data-testid='conversation-compose-box-input'] > p")
 
