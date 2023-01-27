@@ -43,6 +43,7 @@ function sleep(ms) {
         await tagEveryone()
       } catch (error) {
         alert(error.message)
+        throw error
       }
     }
   })
