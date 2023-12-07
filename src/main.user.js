@@ -49,7 +49,7 @@ function sleep(ms) {
   })
 
   function extractGroupUsers() {
-    const groupSubtitle = document.querySelector("[data-testid='chat-subtitle']")
+    const groupSubtitle = document.querySelector("#main > header span.selectable-text.copyable-text")
 
     if (!groupSubtitle) {
       throw new Error('No chat subtitle found. Please open a group chat.')
@@ -93,7 +93,7 @@ function sleep(ms) {
   async function tagEveryone() {
     const groupUsers = extractGroupUsers()
 
-    const chatInput = document.querySelector("[data-testid='conversation-compose-box-input'] > p")
+    const chatInput = document.querySelector("footer [contenteditable='true'][role='textbox'][spellcheck='false'] > p")
 
     if (!chatInput) {
       throw new Error('No chat input found. Please type a letter in the chat input.')
