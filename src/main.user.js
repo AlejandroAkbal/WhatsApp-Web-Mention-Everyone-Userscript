@@ -69,22 +69,8 @@ function sleep(ms) {
       )
     }
 
-    // Remove unnecessary text
-    groupUsers = groupUsers.filter(
-      (user) =>
-        [
-          'You', // English
-          '您', // Chinese
-          'あなた', // Japanese
-          'आप', // Hindi
-          'Tu', // Spanish
-          'Vous', // French
-          'Du', // German
-          'Jij', // Dutch
-          'Você', // Portuguese
-          'Вы' // Russian
-        ].includes(user) === false
-    )
+    // Remove last user (the user itself)
+    groupUsers.pop()
 
     // Normalize user's names without accents or special characters
     return groupUsers.map((user) => user.normalize('NFD').replace(/[\u0300-\u036f]/g, ''))
