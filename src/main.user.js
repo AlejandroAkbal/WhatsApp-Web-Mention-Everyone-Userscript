@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name            WhatsApp Web Mention Everyone
 // @namespace       AlejandroAkbal
-// @version         0.1.3
+// @version         0.1.4
 // @description     Automatically tag everyone in a group chat on WhatsApp Web
 // @author          Alejandro Akbal
 // @license         AGPL-3.0
