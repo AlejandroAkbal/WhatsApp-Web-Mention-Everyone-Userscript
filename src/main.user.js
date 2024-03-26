@@ -81,11 +81,10 @@ function sleep(ms) {
 
     // Identify the current text box
     const chatInput = document.activeElement;
+    
     if (!chatInput) {
       throw new Error('No chat input found. Please type a letter in the chat input.')
     }
-
-    chatInput.innerText = chatInput.innerText.slice(0, -2);
 
     for (const user of groupUsers) {
       document.execCommand('insertText', false, `@${user}`)
