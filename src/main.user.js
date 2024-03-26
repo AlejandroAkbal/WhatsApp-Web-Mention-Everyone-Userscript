@@ -79,17 +79,18 @@ function sleep(ms) {
   async function tagEveryone() {
     const groupUsers = extractGroupUsers()
 
-    const chatInput = document.querySelector("footer [contenteditable='true'][role='textbox'][spellcheck='false'] > p")
-
+    // Identify the current text box
+    const chatInput = document.activeElement;
     if (!chatInput) {
       throw new Error('No chat input found. Please type a letter in the chat input.')
     }
 
+    chatInput.innerText = chatInput.innerText.slice(0, -2);
+
     for (const user of groupUsers) {
       document.execCommand('insertText', false, `@${user}`)
 
-      // await waitForElement("[data-testid='contact-mention-list-item']")
-      await sleep(300)
+      await sleep(10)
 
       // Send "tab" key to autocomplete the user
       const keyboardEvent = new KeyboardEvent('keydown', {
