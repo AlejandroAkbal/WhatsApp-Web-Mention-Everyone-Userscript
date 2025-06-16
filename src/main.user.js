@@ -37,8 +37,6 @@ function sleep(ms) {
     if (buffer === '@@') {
       buffer = ''
 
-      // TODO: Delete the last 2 written characters (the "@@")
-
       try {
         await tagEveryone()
       } catch (error) {
@@ -86,6 +84,19 @@ function sleep(ms) {
       throw new Error('No chat input found. Please type a letter in the chat input.')
     }
 
+    for (let i = 0; i < 2; i++) {
+      const keyboardEvent = new KeyboardEvent('keydown', {
+        key: 'Backspace',
+        code: 'Backspace',
+        keyCode: 8,
+        which: 8,
+        bubbles: true,
+        cancelable: true,
+        view: window
+      });
+
+      chatInput.dispatchEvent(keyboardEvent);
+    }
     for (const user of groupUsers) {
       document.execCommand('insertText', false, `@${user}`)
 
