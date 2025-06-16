@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name            WhatsApp Web Mention Everyone
 // @namespace       AlejandroAkbal
-// @version         0.1.5
+// @version         0.1.6
 // @description     Automatically tag everyone in a group chat on WhatsApp Web
 // @author          Alejandro Akbal
 // @license         AGPL-3.0
@@ -84,6 +84,7 @@ function sleep(ms) {
       throw new Error('No chat input found. Please type a letter in the chat input.')
     }
 
+    // Remove the two "@"
     for (let i = 0; i < 2; i++) {
       const keyboardEvent = new KeyboardEvent('keydown', {
         key: 'Backspace',
@@ -97,6 +98,7 @@ function sleep(ms) {
 
       chatInput.dispatchEvent(keyboardEvent);
     }
+    
     for (const user of groupUsers) {
       document.execCommand('insertText', false, `@${user}`)
 
